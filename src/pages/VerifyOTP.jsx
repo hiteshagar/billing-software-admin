@@ -36,7 +36,10 @@ export default function VerifyOTP() {
       message.success('Login successful!');
       navigate('/dashboard');
     } catch (err) {
-      const msg = err.response?.data?.message || 'Invalid OTP. Please try again.';
+      const msg =
+        err.response?.data?.error ||
+        err.response?.data?.message ||
+        'Invalid OTP. Please try again.';
       message.error(msg);
     } finally {
       setLoading(false);

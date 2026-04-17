@@ -24,7 +24,10 @@ export default function Login() {
       message.success(data.message || 'OTP sent successfully!');
       navigate('/verify-otp', { state: { devOtp: data.otp } });
     } catch (err) {
-      const msg = err.response?.data?.message || 'Login failed. Please check your credentials.';
+      const msg =
+        err.response?.data?.error ||
+        err.response?.data?.message ||
+        'Login failed. Please check your credentials.';
       message.error(msg);
     } finally {
       setLoading(false);

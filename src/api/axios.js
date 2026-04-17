@@ -26,11 +26,12 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor — handle 401
+// Response interceptor — handle expired sessions, but let auth endpoints surface their own errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const isAuthEndpoint = /\/admin\/auth\//.test(error.config?.url || '');
+    if (error.response?.status === 401 && !isAuthEndpoint) {
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem('billing_admin_temp_token');
       window.location.href = '/login';
