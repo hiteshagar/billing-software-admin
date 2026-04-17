@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Card, Form, Input, Button, message, Typography } from 'antd';
+import { Alert, Card, Form, Input, Button, message, Typography } from 'antd';
 import { SafetyCertificateOutlined, ShopOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { flushSync } from 'react-dom';
 import { useAuth } from '../store/auth';
 import api from '../api/axios';
@@ -12,7 +12,9 @@ export default function VerifyOTP() {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const location = useLocation();
   const { tempToken, setToken, setTempToken } = useAuth();
+  const devOtp = location.state?.devOtp;
 
   const handleSubmit = async (values) => {
     if (!tempToken) {
@@ -51,6 +53,20 @@ export default function VerifyOTP() {
           </Title>
           <Text type="secondary">Enter the 6-digit OTP sent to your email</Text>
         </div>
+
+        {devOtp && (
+          <Alert
+            type="info"
+            showIcon
+            style={{ marginBottom: 16 }}
+            message="Testing mode"
+            description={
+              <span>
+                Your OTP is <strong style={{ fontSize: 18, letterSpacing: 4 }}>{devOtp}</strong>
+              </span>
+            }
+          />
+        )}
 
         <Form
           form={form}

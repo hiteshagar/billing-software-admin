@@ -22,7 +22,7 @@ export default function Login() {
       });
       setTempToken(data.tempToken);
       message.success(data.message || 'OTP sent successfully!');
-      navigate('/verify-otp');
+      navigate('/verify-otp', { state: { devOtp: data.otp } });
     } catch (err) {
       const msg = err.response?.data?.message || 'Login failed. Please check your credentials.';
       message.error(msg);
