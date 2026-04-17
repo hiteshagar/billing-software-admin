@@ -2,8 +2,12 @@ import axios from 'axios';
 
 const TOKEN_KEY = 'billing_admin_token';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
+export const UPLOADS_BASE_URL = API_BASE_URL.replace(/\/api\/?$/, '') + '/uploads';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE_URL,
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json',

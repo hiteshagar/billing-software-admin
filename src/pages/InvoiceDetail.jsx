@@ -17,7 +17,7 @@ import {
 import { ArrowLeftOutlined, FileTextOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../api/axios';
+import api, { UPLOADS_BASE_URL } from '../api/axios';
 
 const { Title, Text } = Typography;
 
@@ -109,7 +109,7 @@ export default function InvoiceDetail() {
       render: (_, item) => {
         const photoPath = item.photo_path || item.photo;
         if (!photoPath) return <Text type="secondary" style={{ fontSize: 12 }}>No photo</Text>;
-        const url = `http://localhost:3000/uploads/${photoPath}`;
+        const url = `${UPLOADS_BASE_URL}/${photoPath}`;
         return (
           <img
             src={url}
